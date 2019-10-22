@@ -2,7 +2,6 @@ import datetime
 from decimal import Decimal
 
 from django.core.serializers.json import DjangoJSONEncoder
-from django.utils import six
 
 
 class TZAwareJSONEncoder(DjangoJSONEncoder):
@@ -34,7 +33,7 @@ def default(o):
 
 
 def _resolve_object_path(dotted_name):
-    if isinstance(dotted_name, six.string_types):
+    if isinstance(dotted_name, str):
         path = dotted_name.split('.')
         module = __import__(dotted_name.rsplit('.', 1)[0])
         for item in path[1:-1]:

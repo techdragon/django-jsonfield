@@ -7,7 +7,6 @@ from django.conf import settings
 from django.db import models
 from django.db.models.lookups import Exact, IExact, In, Contains, IContains
 from django.utils.translation import ugettext_lazy as _
-from django.utils import six
 
 from .utils import _resolve_object_path
 from .widgets import JSONWidget
@@ -60,7 +59,7 @@ class JSONField(models.Field):
             default = self.default
             if callable(default):
                 default = default()
-            if isinstance(default, six.string_types):
+            if isinstance(default, str):
                 return json.loads(default, **self.decoder_kwargs)
             return json.loads(json.dumps(default, **self.encoder_kwargs), **self.decoder_kwargs)
         return super(JSONField, self).get_default()

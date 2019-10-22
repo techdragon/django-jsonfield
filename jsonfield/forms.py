@@ -1,7 +1,6 @@
 import json
 
 from django import forms
-from django.utils import six
 
 from .widgets import JSONWidget
 
@@ -15,12 +14,12 @@ class JSONFormField(forms.CharField):
         super(JSONFormField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
-        if isinstance(value, six.string_types) and value:
+        if isinstance(value, str) and value:
             try:
                 return json.loads(value)
             except ValueError as exc:
                 raise forms.ValidationError(
-                    'JSON decode error: %s' % (six.u(exc.args[0]),)
+                    'JSON decode error: %s' % (str(exc.args[0]),)
                 )
         else:
             return value
